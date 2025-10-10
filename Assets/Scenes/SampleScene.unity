@@ -874,6 +874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1522516617}
+  - component: {fileID: 1522516619}
   - component: {fileID: 1522516618}
   m_Layer: 0
   m_Name: Player
@@ -908,9 +909,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1522516616}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b030c602ce949d4abab263db48e63ae, type: 3}
+  m_Script: {fileID: 11500000, guid: beafb4f42f3c9f441842a0c0268c6be4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+  m_EditorClassIdentifier: Assembly-CSharp::Player.States.DefaultState
+  crate: {fileID: 246482058}
+--- !u!114 &1522516619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1522516616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f520a6a6c87227e47971485f0e638b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerController
 --- !u!1 &1545041198
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,16 +1,35 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class CatchState : MonoBehaviour
+namespace Player.States
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class CatchState : PlayerState
     {
+        private InputAction _interactAction;
+        void Start()
+        {
+            Debug.Log("CatchState::Start");
+            _type = StateEnum.Catch;
+            _interactAction = InputSystem.actions.FindAction("Interact");
+        }
         
-    }
+        void Update()
+        {
+            if (_interactAction.WasReleasedThisFrame())
+            {
+                _player.ChangeState(StateEnum.Default);
+            }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        public override void OnStateEnter()
+        {
+            Debug.Log("CatchState::OnStateEnter");
+            crate.SetActive(true);
+        }
+        public override void OnStateExit()
+        {
+            crate.SetActive(false);
+        }
         
     }
 }
