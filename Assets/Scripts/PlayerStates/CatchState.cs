@@ -17,6 +17,7 @@ namespace Player.States
         {
             if (_interactAction.WasReleasedThisFrame())
             {
+                Debug.Log("CatchState:: Key Released");
                 _player.ChangeState(StateEnum.Default);
             }
         }
@@ -24,11 +25,11 @@ namespace Player.States
         public override void OnStateEnter()
         {
             Debug.Log("CatchState::OnStateEnter");
-            crate.SetActive(true);
+            _player.crate.SetActive(true);
         }
         public override void OnStateExit()
         {
-            crate.SetActive(false);
+            _player.crate.SetActive(false);
         }
         
     }

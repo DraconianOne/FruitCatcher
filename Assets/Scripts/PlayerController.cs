@@ -6,9 +6,9 @@ using UnityEngine;
 namespace Player { 
     public class PlayerController : MonoBehaviour
     {
-        
-        
-        
+
+
+        public GameObject crate;
         private PlayerState _state;
         private PlayerState _prevState;
         private Dictionary<StateEnum, PlayerState> _states;
@@ -37,7 +37,12 @@ namespace Player {
         public void ChangeState(StateEnum newState)
         {
             Debug.Log("PlayerController::ChangeState: " +  newState);
-            if (newState == StateEnum.None || !_states.ContainsKey(newState) || _state == _states[newState]) return;
+            Debug.Log("Current State: " + _state);
+            if (newState == StateEnum.None || !_states.ContainsKey(newState) || _state == _states[newState])
+            {
+                Debug.LogError("Error changing state");
+                return;
+            };
         
             if(_state) _state.OnStateExit();
             _prevState = _state;

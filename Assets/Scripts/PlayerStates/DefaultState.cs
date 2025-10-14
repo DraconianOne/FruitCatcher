@@ -34,7 +34,7 @@ namespace Player.States
 
         public override void OnStateEnter()
         {
-            crate.SetActive(false);
+            _player.crate.SetActive(false);
         }
     }
 }
