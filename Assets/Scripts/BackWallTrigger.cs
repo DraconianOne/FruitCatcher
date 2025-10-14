@@ -15,7 +15,6 @@ public class BackWallTrigger : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Back wall got hit by " + other.name);
         spriteRenderer.color = hitColor;
         GameController.Instance.LoseLife();
     }

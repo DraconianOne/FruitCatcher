@@ -6,10 +6,17 @@ namespace Player.States
     public class CatchState : PlayerState
     {
         private InputAction _interactAction;
+        
+        protected override void Awake()
+        {
+            base.Awake();               
+            _type = StateEnum.Catch;
+        }
+
         void Start()
         {
             Debug.Log("CatchState::Start");
-            _type = StateEnum.Catch;
+            
             _interactAction = InputSystem.actions.FindAction("Interact");
         }
         

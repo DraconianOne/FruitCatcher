@@ -37,8 +37,10 @@ public class GameController : MonoBehaviour
         score = 0;
         lives = 3;
         
+        //TODO Wait until everything is loaded
         //TODO Add countdown to start
         //Start Spawning balls
+        
         StartCoroutine(ThrowBalls());
 
     }
@@ -57,7 +59,23 @@ public class GameController : MonoBehaviour
     public void LoseLife()
     {
         lives--;
+        UIController.Instance.LoseLife(lives);
+        //Invoke Life Lost state
+        
         isGameOver = (lives <= 0);
+        if (isGameOver) EndGame();
+    }
+
+    public void EndGame()
+    {
+        StopAllCoroutines();
+        UIController.Instance.EndGame();
+    }
+
+    public void UpdateScore(int n)
+    {
+        score += n;
+        UIController.Instance.UpdateScore(score);
     }
     
 }
