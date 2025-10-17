@@ -1,16 +1,66 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
+    
+    private static UIController _instance;
+    public static UIController Instance { get { return _instance; }}
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private GameObject gameOverText;
+    [SerializeField] private GameObject[] lives; 
+    /*
+   [SerializeField] private Image[] lives;
+   [SerializeField] private TextMeshProUGUI scoreText;
+   [SerializeField] private TextMeshProUGUI gameOverText;
+   */
+    
+    private void Awake()
+    {
+        if (_instance)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+    }
+
+    public void UpdateScore(int score)
+    {
+        scoreText.text = score.ToString("D4");
+    }
+    
+    public void LoseLife(int i)
+    {
+        lives[i].SetActive(false);
+    }
+
+    public void EndGame()
+    {
+        gameOverText.SetActive(true);
+    }
+    
+    /*
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        gameOverText.gameObject.SetActive(false);
+        foreach (Image life in lives)
+            life.gameObject.SetActive(true);
         
     }
+
+    public void LoseLife(int i)
+    {
+        //lives[i].gameObject.SetActive(false);
+    }
+
+    public void EndGame()
+    {
+        //gameOverText.gameObject.SetActive(true);
+    }
+    */
+    
 }

@@ -6,10 +6,17 @@ namespace Player.States
     public class CatchState : PlayerState
     {
         private InputAction _interactAction;
+        
+        protected override void Awake()
+        {
+            base.Awake();               
+            _type = StateEnum.Catch;
+        }
+
         void Start()
         {
             Debug.Log("CatchState::Start");
-            _type = StateEnum.Catch;
+            
             _interactAction = InputSystem.actions.FindAction("Interact");
         }
         
@@ -17,6 +24,7 @@ namespace Player.States
         {
             if (_interactAction.WasReleasedThisFrame())
             {
+                Debug.Log("CatchState:: Key Released");
                 _player.ChangeState(StateEnum.Default);
             }
         }
@@ -24,11 +32,11 @@ namespace Player.States
         public override void OnStateEnter()
         {
             Debug.Log("CatchState::OnStateEnter");
-            crate.SetActive(true);
+            _player.crate.SetActive(true);
         }
         public override void OnStateExit()
         {
-            crate.SetActive(false);
+            _player.crate.SetActive(false);
         }
         
     }
