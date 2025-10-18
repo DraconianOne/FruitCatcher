@@ -7,27 +7,37 @@ namespace Player {
     public class PlayerController : MonoBehaviour
     {
         
+        private static PlayerController _instance;
+        public static PlayerController Instance { get { return _instance; }}
+        
         public GameObject crate;
+
+        [SerializeField] public readonly float DefaultXPos = -7.4f;    
+        [SerializeField] public readonly float YPosOffset = 1.25f;
+        
         private PlayerState _state;
         private PlayerState _prevState;
         private Dictionary<StateEnum, PlayerState> _states =  new Dictionary<StateEnum, PlayerState>();
-
+        
         private void Awake()
         {
-            Debug.Log("PlayerController::Awake");
+            if (_instance)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            _instance = this;
         }
         
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            
             Debug.Log("PlayerController::Start");
             
             PlayerState[] statesArray = GetComponents<PlayerState>();
             Debug.Log("StatesArray Length: " + statesArray.Length);
             foreach (var st in statesArray)
             {
-               Debug.Log("Adding " + st);
+                Debug.Log("Adding " + st);
                 _states.Add(st.StateType, st);
             }
             //_states = GetComponents<PlayerState>().ToDictionary(s => s.StateType, s => s);
@@ -38,8 +48,6 @@ namespace Player {
             }
             _state = _states[StateEnum.Default];
             
-            
-            
             /*
             PlayerState[] statesArray = GetComponents<PlayerState>();
             Debug.Log("StatesArray Length: " + statesArray.Length);
@@ -48,7 +56,7 @@ namespace Player {
                 Debug.Log(st.ToString());
             }
             _states = GetComponents<PlayerState>().ToDictionary(s => s.StateType, s => s);
-            
+
             _state = _states[StateEnum.Default];
             */
             _state.OnStateEnter();
@@ -57,13 +65,22 @@ namespace Player {
         // Update is called once per frame
         void Update()
         {
-            
+            _state.DoUpdate();  
         }
 
         public void ChangeState(StateEnum newState)
         {
-            Debug.Log("PlayerController::ChangeState: " +  newState);
-            Debug.Log("Current State: " + _state);
+
+            if (newState == StateEnum.None || !_states.ContainsKey(newState) || _state == _states[newState]) return;
+            
+            if(_state) _state.OnStateExit();
+            _prevState = _state;
+            _state = _states[newState];
+            _state.OnStateEnter();
+        }
+
+        private void DebugStateChange(StateEnum newState)
+        {
             if (newState == StateEnum.None)
             {
                 Debug.LogError("newState is NONE");
@@ -83,19 +100,8 @@ namespace Player {
                 Debug.LogError(_state + " is same as " + newState);
                 return;
             };
-            /*
-            if (newState == StateEnum.None || !_states.ContainsKey(newState) || _state == _states[newState])
-            {
-                Debug.LogError("Error changing state");
-                return;
-            };
-            */
-        
-            if(_state) _state.OnStateExit();
-            _prevState = _state;
-            _state = _states[newState];
-            _state.OnStateEnter();
         }
+        
         
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
+
 public class Thrower : MonoBehaviour
 {
     
@@ -8,20 +9,20 @@ public class Thrower : MonoBehaviour
     [SerializeField] private Transform throwFromPoint;
     
     private IObjectPool<Throwable> _objectPool;
+    [SerializeField] private Transform[] targets = new Transform[3];
     
     // Throw an exception if we try to return an existing item, already in the pool
     [SerializeField] private bool collectionCheck = true;
     
-    //Extra optins to control the pool capacity and maximum size    
-    [SerializeField] private int defaultCapacity = 20;
-    [SerializeField] private int maxSize = 100;
+    //Extra options to control the pool capacity and maximum size    
+    [SerializeField] private int defaultCapacity = 5;
+    [SerializeField] private int maxSize = 20;
 
     private void Awake()
     {
         _objectPool = new ObjectPool<Throwable>
             (CreateThrowable,OnGetFromPool, OnReleaseToPool,
             OnDestroyPooledObject, collectionCheck, defaultCapacity, maxSize);
-
     }
 
     private Throwable CreateThrowable()
@@ -46,12 +47,9 @@ public class Thrower : MonoBehaviour
         Destroy(pooledObject.gameObject);
     }
 
-    private void Update()
+    public void StopThrowing()
     {
-        if (Keyboard.current.fKey.wasPressedThisFrame)
-        {
-            ThrowItem();
-        }
+        _objectPool.Clear();
     }
 
     public void ThrowItem()
@@ -59,12 +57,16 @@ public class Thrower : MonoBehaviour
         Throwable thrownObject = _objectPool.Get();
         if (!thrownObject) return;
         
-        Debug.Log("Throwing object");
-        
-        thrownObject.transform.position = throwFromPoint.position;
-        
+        thrownObject.Init(throwFromPoint.position, targets[Random.Range(0,3)].position);
         thrownObject.Deactivate(); //Calls coroutine to deactivate
-        
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cornflowerBlue;
+        
+        Gizmos.DrawLine(throwFromPoint.position, targets[0].position);
+        Gizmos.DrawLine(throwFromPoint.position, targets[1].position);
+        Gizmos.DrawLine(throwFromPoint.position, targets[2].position);
+    }
 }

@@ -69,6 +69,8 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         StopAllCoroutines();
+        _thrower.StopThrowing();
+        //Add event here
         UIController.Instance.EndGame();
     }
 
