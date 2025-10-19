@@ -26,12 +26,18 @@ public class UIController : MonoBehaviour
         _instance = this;
     }
 
+    private void Start()
+    {
+        GameController.Instance.LifeLost += OnLoseLife;
+        GameController.Instance.GameOver += EndGame;
+    }
+
     public void UpdateScore(int score)
     {
         scoreText.text = score.ToString("D4");
     }
     
-    public void LoseLife(int i)
+    public void OnLoseLife(int i)
     {
         lives[i].SetActive(false);
     }

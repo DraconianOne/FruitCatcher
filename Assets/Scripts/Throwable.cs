@@ -1,17 +1,32 @@
 using UnityEngine;
 using UnityEngine.Pool;
 using System.Collections;
+using Player;
 
 public class Throwable : MonoBehaviour
 {
 
+    public ThrownObject thrownObject;
     public float throwSpeed = 5.0f;
     [SerializeField] private float timeoutDelay = 3f;
     private Vector3 _throwTarget;
-    
+
     private IObjectPool<Throwable> _objectPool;
+
+    public IObjectPool<Throwable> ObjectPool
+    {
+        set => _objectPool = value;
+    }
+
+    public bool IsCatchable() { return thrownObject.IsCatchable; }
+
+    public int Points() { return thrownObject.ItemPoints; }
     
-    public IObjectPool<Throwable> ObjectPool {set => _objectPool = value;}
+    private void Start()
+    {
+        GameController.Instance.GameOver += Release;
+        GameController.Instance.LifeLost += Release;
+    }
     
     public void Deactivate()
     {
@@ -27,6 +42,12 @@ public class Throwable : MonoBehaviour
     public void Release()
     {
         _objectPool.Release(this);
+    }
+
+    //TODO This is an unnecessary override all because LifeLost has a parameter
+    public void Release(int i)
+    {
+        this.Release();
     }
 
     IEnumerator DeactivateRoutine(float delay)

@@ -1,14 +1,15 @@
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
+using UnityEngine.InputSystem;
 
 public class Thrower : MonoBehaviour
 {
     
-    [SerializeField] private Throwable throwablePrefab; 
+    [SerializeField] private Throwable[] throwablePrefabs; 
     [SerializeField] private Transform throwFromPoint;
     
-    private IObjectPool<Throwable> _objectPool;
+    private ObjectPool<Throwable> _objectPool;
     [SerializeField] private Transform[] targets = new Transform[3];
     
     // Throw an exception if we try to return an existing item, already in the pool
@@ -17,6 +18,7 @@ public class Thrower : MonoBehaviour
     //Extra options to control the pool capacity and maximum size    
     [SerializeField] private int defaultCapacity = 5;
     [SerializeField] private int maxSize = 20;
+    [SerializeField] private int ballsInPlay = 3;
 
     private void Awake()
     {
@@ -27,7 +29,9 @@ public class Thrower : MonoBehaviour
 
     private Throwable CreateThrowable()
     {
-        Throwable throwableInstance = Instantiate(throwablePrefab);
+        int i = (GameController.Instance.Score < 10) ? 0 : Random.Range(0, throwablePrefabs.Length);
+        Debug.Log(GameController.Instance.Score + " i=" + i);
+        Throwable throwableInstance = Instantiate(throwablePrefabs[i]);
         throwableInstance.ObjectPool = _objectPool;
         return throwableInstance;
     }
@@ -54,13 +58,15 @@ public class Thrower : MonoBehaviour
 
     public void ThrowItem()
     {
+        if(_objectPool.CountActive < ballsInPlay){
         Throwable thrownObject = _objectPool.Get();
-        if (!thrownObject) return;
-        
-        thrownObject.Init(throwFromPoint.position, targets[Random.Range(0,3)].position);
-        thrownObject.Deactivate(); //Calls coroutine to deactivate
+            if (!thrownObject) return;
+            
+            thrownObject.Init(throwFromPoint.position, targets[Random.Range(0,3)].position);
+            thrownObject.Deactivate(); //Calls coroutine to deactivate
+        }
     }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cornflowerBlue;

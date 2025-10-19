@@ -9,9 +9,17 @@ public class CrateTrigger : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Throwable>(out Throwable throwable))
         {
+            if (throwable.IsCatchable())
+            {
+                PlayerController.Instance.ChangeState(StateEnum.Default);
+                GameController.Instance.UpdateScore(1);
+            }
+            else
+            {
+                GameController.Instance.LoseLife();
+            }
+
             throwable.Release();
-            PlayerController.Instance.ChangeState(StateEnum.Default);
-            GameController.Instance.UpdateScore(1);
         }
     }
 }

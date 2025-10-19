@@ -16,6 +16,9 @@ public class BackWallTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         spriteRenderer.color = hitColor;
-        GameController.Instance.LoseLife();
+        if (other.gameObject.TryGetComponent<Throwable>(out Throwable throwable))
+        {
+            if (throwable.IsCatchable()) GameController.Instance.LoseLife();
+        }
     }
 }
