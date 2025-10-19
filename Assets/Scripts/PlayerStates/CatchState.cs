@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,38 +6,38 @@ namespace Player.States
 {
     public class CatchState : PlayerState
     {
-        private InputAction _interactAction;
+      
+        [SerializeField] private float catchDelay = 0.5f;
+        private float _catchWait = 0f;
+        
         
         protected override void Awake()
         {
             base.Awake();               
             _type = StateEnum.Catch;
         }
-
-        void Start()
-        {
-            Debug.Log("CatchState::Start");
-            
-            _interactAction = InputSystem.actions.FindAction("Interact");
-        }
         
-        void Update()
+        public override void DoUpdate()
         {
-            if (_interactAction.WasReleasedThisFrame())
+            if (_catchWait > 0f)
             {
-                Debug.Log("CatchState:: Key Released");
+                _catchWait -= Time.deltaTime;
+            }
+            else
+            {
                 _player.ChangeState(StateEnum.Default);
             }
         }
 
         public override void OnStateEnter()
         {
-            Debug.Log("CatchState::OnStateEnter");
             _player.crate.SetActive(true);
+            _catchWait = catchDelay;
         }
         public override void OnStateExit()
         {
             _player.crate.SetActive(false);
+            _catchWait = 0f;
         }
         
     }

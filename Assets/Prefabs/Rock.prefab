@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.98742133, g: 0.9140462, b: 0.021735527, a: 1}
+  m_Color: {r: 0.36477977, g: 0.36477977, b: 0.36477977, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3472758415148884738}
   - component: {fileID: 2102804772336590895}
   m_Layer: 0
-  m_Name: Item
+  m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d710e4e5f3d7c4d8b4c760e07e9501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Throwable
+  thrownObject: {fileID: 11400000, guid: 0464921911d4e7443b4430fd21362528, type: 2}
   throwSpeed: 5
   timeoutDelay: 5
 --- !u!58 &3472758415148884738

@@ -5,16 +5,18 @@ namespace Player.States
     public abstract class PlayerState : MonoBehaviour
     {
         protected static PlayerController _player { get; private set; }
-        protected StateEnum _type =  StateEnum.None;
+        protected StateEnum _type = StateEnum.None;
         public StateEnum StateType {get{return _type;}}
 
         protected virtual void Awake()
         {
-           _player = GetComponent<PlayerController>();
+           _player = PlayerController.Instance;
         }
-
-        public virtual void OnStateEnter() { Debug.Log("base:OnStateEnter"); }
-        public virtual void OnStateExit() { Debug.Log("base:OnStateExit"); }
+        
+        
+        public abstract void DoUpdate();
+        public abstract void OnStateEnter();
+        public abstract void OnStateExit();
 
     }
 }
