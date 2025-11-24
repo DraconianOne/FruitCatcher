@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class UIController : MonoBehaviour
     private static UIController _instance;
     public static UIController Instance { get { return _instance; }}
     [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private GameObject gameOverText;
+    [SerializeField] private GameObject endGamePanel;
     [SerializeField] private GameObject[] lives; 
     /*
    [SerializeField] private Image[] lives;
@@ -44,7 +45,17 @@ public class UIController : MonoBehaviour
 
     public void EndGame()
     {
-        gameOverText.SetActive(true);
+        endGamePanel.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void QuitGame()
+    {
+        SceneManager.LoadScene("Main");
     }
     
     /*

@@ -13,13 +13,14 @@ public class CrateTrigger : MonoBehaviour
             {
                 PlayerController.Instance.ChangeState(StateEnum.Default);
                 GameController.Instance.UpdateScore(1);
+                throwable.Release();
             }
             else
             {
                 GameController.Instance.LoseLife();
             }
 
-            throwable.Release();
+            
         }
     }
 }

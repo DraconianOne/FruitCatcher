@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
     
     public int Score { get { return score; } }
 
-    [SerializeField] private float throwDelay = 2f; 
+    [SerializeField] private float baseThrowDelay = 5f;
+    [SerializeField] private float minThrowDelay = 0.5f;
     [SerializeField] private float restartDelay = 2f;
     private WaitForSeconds throwDelayWait = new WaitForSeconds(2);
     private float _restartWait = 0f;
@@ -44,7 +45,11 @@ public class GameController : MonoBehaviour
     void FixedUpdate()
     {
         if (_restartWait > 0f) { _restartWait -= Time.deltaTime; }
-        else if (waitForRestart) { RestartGame(); }
+        else if (waitForRestart)
+        {
+            Debug.Log("About to restart");
+            RestartGame();
+        }
     }
     
     private void StartGame()
@@ -62,35 +67,51 @@ public class GameController : MonoBehaviour
 
     private void RestartGame()
     {
+        Debug.Log("Restart");
         Restart?.Invoke();
         waitForRestart = false;
-        StartCoroutine(ThrowBalls());
+        Debug.Log("Restart - StartCoRoutine");
+        //StartCoroutine(ThrowBalls());
     }
 
     private IEnumerator ThrowBalls()
     {
-        WaitForSeconds wait = new WaitForSeconds(throwDelay);
-        while (!isGameOver && !waitForRestart)
+        Debug.Log($"Coroutine - throwBalls {isGameOver}, {waitForRestart}");
+        WaitForSeconds wait = new WaitForSeconds(GetThrowDelay());
+        //while (!isGameOver && !waitForRestart)
+        while(true)
         {
-            _thrower.ThrowItem();
-            yield return wait;
+           Debug.Log("in coroutine");
+           if(!isGameOver && !waitForRestart){
+               Debug.Log("Throwing in coroutine");
+                _thrower.ThrowItem(score);
+           }
+           yield return wait;
         }
-        
     }
+
+    private float GetThrowDelay()
+    {
+        if (waitForRestart) return 1f;
+        return baseThrowDelay;
+    }
+    
 
     public void LoseLife()
     {
-        StopAllCoroutines();
+        Debug.Log("Life Losst");
+        //StopAllCoroutines();
         waitForRestart = true;
         lives--;
         //UIController.Instance.LoseLife(lives);
         LifeLost?.Invoke(lives);
         //Invoke Life Lost state
         
-        isGameOver = (lives <= 0);
+        isGameOver = lives <= 0;
         if (isGameOver)
         {
             GameOver?.Invoke();
+            EndGame();
         } else {
             _restartWait = restartDelay;
         }
@@ -100,7 +121,7 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         
-        //_thrower.StopThrowing();
+        _thrower.StopThrowing();
         //Add event here
         //UIController.Instance.EndGame();
        

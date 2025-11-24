@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1699104609748977515}
   - component: {fileID: 3931511767769044516}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 34726877594855506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: -0.00000047684, y: 0, z: 0}
+  m_LocalScale: {x: 0.195835, y: 0.204165, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3277464360219913304}
@@ -76,11 +76,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -898681931
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.98742133, g: 0.9140462, b: 0.021735527, a: 1}
+  m_Sprite: {fileID: 7381965769198725172, guid: 803bca89abe66d049a4f0a8699e59e2f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -137,7 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d710e4e5f3d7c4d8b4c760e07e9501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Throwable
-  thrownObject: {fileID: 11400000, guid: f57266aeb70c94e458d349e50ae617b5, type: 2}
+  rockSprite: {fileID: -2182124076254010665, guid: 95438dcd7bc8a5744b1b20627c7b96e7, type: 3}
+  fruitSprite: {fileID: -9182177788924653191, guid: 7f4e558c20d057648abf6af4a08cffc7, type: 3}
+  spriteRenderer: {fileID: 3931511767769044516}
   throwSpeed: 5
   timeoutDelay: 5
 --- !u!58 &3472758415148884738

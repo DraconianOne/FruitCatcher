@@ -76,10 +76,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -898681931
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -8928353985846378153, guid: 649ef512502e9fa45ac303dfd86773ac, type: 3}
   m_Color: {r: 0.35220122, g: 0.2152637, b: 0.1871761, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -137,7 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d710e4e5f3d7c4d8b4c760e07e9501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Throwable
-  thrownObject: {fileID: 11400000, guid: 5da333d5271dfd64985000f4ebcaa6ea, type: 2}
+  rockSprite: {fileID: -2182124076254010665, guid: 95438dcd7bc8a5744b1b20627c7b96e7, type: 3}
+  fruitSprite: {fileID: -8928353985846378153, guid: 649ef512502e9fa45ac303dfd86773ac, type: 3}
+  spriteRenderer: {fileID: 3931511767769044516}
   throwSpeed: 5
   timeoutDelay: 5
 --- !u!58 &3472758415148884738
