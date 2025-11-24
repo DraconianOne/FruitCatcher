@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 34726877594855506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0.3584, y: 0.3217, z: 0}
+  m_LocalScale: {x: 0.33319137, y: 0.33245, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3277464360219913304}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2182124076254010665, guid: 9d86130a8ad01a445898b69b558505be, type: 3}
   m_Color: {r: 0.36477977, g: 0.36477977, b: 0.36477977, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6075112517060333176
@@ -118,8 +118,8 @@ Transform:
   m_GameObject: {fileID: 6075112517060333176}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.97839, y: 0.77174, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.7663, y: 0.91549, z: 0}
+  m_LocalScale: {x: 0.40833, y: 0.375, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1699104609748977515}
@@ -137,7 +137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45d710e4e5f3d7c4d8b4c760e07e9501, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Throwable
-  thrownObject: {fileID: 11400000, guid: 0464921911d4e7443b4430fd21362528, type: 2}
+  rockSprite: {fileID: -5174885968946017889, guid: 27b21cc521d9de34faee950442166407, type: 3}
+  fruitSprite: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   throwSpeed: 5
   timeoutDelay: 5
 --- !u!58 &3472758415148884738
