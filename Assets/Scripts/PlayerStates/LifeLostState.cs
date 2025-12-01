@@ -14,6 +14,7 @@ namespace Player.States
         public override void OnStateEnter()
         {
             _player.transform.position = new Vector3(0f, _player.DefaultYPos, 0f);
+            _player.ChangeSprite(_player.loseSprite);
         }
 
         public override void OnStateExit()

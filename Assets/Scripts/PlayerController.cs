@@ -11,6 +11,11 @@ namespace Player {
         public static PlayerController Instance { get { return _instance; }}
         
         public GameObject crate;
+        
+        public Sprite idleSprite;
+        public Sprite catchSprite;
+        public Sprite loseSprite;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
         [SerializeField] public readonly float DefaultXPos = -7.4f;
         [SerializeField] public readonly float DefaultYPos = -3.75f;
@@ -101,6 +106,11 @@ namespace Player {
                 Debug.LogError(_state + " is same as " + newState);
                 return;
             };
+        }
+
+        public void ChangeSprite(Sprite newSprite)
+        {
+            this.spriteRenderer.sprite = newSprite;
         }
 
        

@@ -1,6 +1,4 @@
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Player.States
 {
@@ -32,6 +30,7 @@ namespace Player.States
         public override void OnStateEnter()
         {
             _player.crate.SetActive(true);
+            _player.ChangeSprite(_player.catchSprite);
             _catchWait = catchDelay;
         }
         public override void OnStateExit()

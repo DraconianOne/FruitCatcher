@@ -19,11 +19,21 @@ public class GameController : MonoBehaviour
     
     public int Score { get { return score; } }
 
-    [SerializeField] private float baseThrowDelay = 5f;
+    [SerializeField] private float baseThrowDelay = 3.5f;
+    
     [SerializeField] private float minThrowDelay = 0.5f;
     [SerializeField] private float restartDelay = 2f;
-    private WaitForSeconds throwDelayWait = new WaitForSeconds(2);
+    //private WaitForSeconds throwDelayWait = new WaitForSeconds(2);
     private float _restartWait = 0f;
+    private float _currentThrowDelay;
+    private float _delayStep = 0.5f;
+    private float _intervalTimer = 0f;
+    private float _intervalDuration = 10f;
+    private float _intervalMin = 5f;
+    private float _challengeDuration = 10f;
+    //private float _challengeTimer = 0f;
+    private float _challengeIncrement = 5f;
+    private bool _inChallengeState = false;
     
     [SerializeField] private Thrower _thrower;
 
@@ -50,6 +60,40 @@ public class GameController : MonoBehaviour
             Debug.Log("About to restart");
             RestartGame();
         }
+        else
+        {
+            GameUpdate();
+        }
+    }
+
+    void GameUpdate()
+    {
+        if(_intervalTimer > 0f) { _intervalTimer -= Time.deltaTime; }
+        else if(_inChallengeState)
+        {
+            //Go to next phase
+            Debug.Log("Finishing challenge state");
+            _inChallengeState = false;
+            _intervalDuration = Mathf.Max(_intervalDuration - 1, _intervalMin);
+            _challengeDuration += _challengeIncrement;
+            _currentThrowDelay = baseThrowDelay;
+            _intervalTimer = _intervalDuration;
+        }
+        else
+        {
+            _currentThrowDelay -= _delayStep; //Add validation to make sure doesn't go under 0.5?
+            Debug.Log("Lowering delay: " + _currentThrowDelay);
+            if (Mathf.Approximately(_currentThrowDelay, minThrowDelay)) //??? Right to use approximately here?
+            {
+                Debug.Log("In Challenge State");
+                _inChallengeState = true;
+                _intervalTimer = _challengeDuration;
+            }
+            else
+            {
+                _intervalTimer = _intervalDuration;
+            }
+        }
     }
     
     private void StartGame()
@@ -58,6 +102,10 @@ public class GameController : MonoBehaviour
         lives = 3;
         
         //TODO Wait until everything is loaded
+
+        _intervalTimer = _intervalDuration;
+        _currentThrowDelay = baseThrowDelay;
+        
         //TODO Add countdown to start
         //Start Spawning balls
         
@@ -77,7 +125,7 @@ public class GameController : MonoBehaviour
     private IEnumerator ThrowBalls()
     {
         Debug.Log($"Coroutine - throwBalls {isGameOver}, {waitForRestart}");
-        WaitForSeconds wait = new WaitForSeconds(GetThrowDelay());
+        //WaitForSeconds wait = new WaitForSeconds(GetThrowDelay());
         //while (!isGameOver && !waitForRestart)
         while(true)
         {
@@ -86,14 +134,16 @@ public class GameController : MonoBehaviour
                Debug.Log("Throwing in coroutine");
                 _thrower.ThrowItem(score);
            }
-           yield return wait;
+           yield return new WaitForSeconds(GetThrowDelay());
         }
     }
 
     private float GetThrowDelay()
     {
+        
+        Debug.Log("Current throw delay: "+_currentThrowDelay);
         if (waitForRestart) return 1f;
-        return baseThrowDelay;
+        return _currentThrowDelay;
     }
     
 
@@ -120,7 +170,7 @@ public class GameController : MonoBehaviour
 
     public void EndGame()
     {
-        
+        StopAllCoroutines();
         _thrower.StopThrowing();
         //Add event here
         //UIController.Instance.EndGame();
