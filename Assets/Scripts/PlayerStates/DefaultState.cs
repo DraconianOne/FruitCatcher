@@ -56,6 +56,7 @@ namespace Player.States
         public override void OnStateEnter()
         {
             _player.crate.SetActive(false);
+            _player.ChangeSprite(_player.idleSprite);
         }
         
         public override void OnStateExit(){ }
